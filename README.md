@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Movie Finder — Movie Discovery App
 
-## Getting Started
+## Live Project
+🔗 [Movie Finder Live](https://movie-finder-hafiz.vercel.app/)
 
-First, run the development server:
+## Overview
+Movie Finder is a movie discovery web app built with Next.js. It lets users browse popular movies, search by title with live results, view full details for any movie, and save favorites that persist across page reloads using localStorage. All movie data is fetched live from a free public API — no custom backend or database required.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Data Source
+This project uses the **[TMDB API](https://www.themoviedb.org/documentation/api)** (The Movie Database) for all movie data, including posters, titles, release dates, ratings, and overviews. A free TMDB account and API Read Access Token are required to run this project locally.
+
+## Technologies Used
+- **Framework:** Next.js 16.2.9
+- **Styling:** Tailwind CSS
+- **Data Fetching:** Native `fetch` API, Server Components
+- **Persistence:** Browser `localStorage` (Favorites)
+- **Data Source:** TMDB API
+
+## Key Features
+
+✅ **Browse Grid:** Responsive grid layout displaying movie poster, title, release year, and rating, adapting from 2 columns on mobile up to 6 columns on large screens.
+
+✅ **Manual Pagination:** Browse and search results are paginated using Next/Previous buttons, showing exactly 12 results per page. No infinite scroll.
+
+✅ **Live Search:** Users can search movies by title, with results updating automatically as they type (debounced to avoid excessive API calls).
+
+✅ **Movie Details Page:** Clicking any movie card opens a dedicated details page showing the full overview, poster, release year, and rating.
+
+✅ **Favorites with Persistence:** Users can add or remove movies from their favorites via a heart icon on each card or the details page. Favorites are stored in `localStorage` and persist across page reloads. A dedicated `/favorites` page lists all saved movies.
+
+✅ **Loading & Error States:** A loading indicator displays while data is being fetched (via Next.js's `loading.js` convention), and clear messages are shown on fetch errors or when a search returns no results.
+
+✅ **Footer Credit:** A footer on the home page displays the required project attribution text.
+
+## Installation & Running Locally
+
+Follow these steps to run the project locally:
+
+1. **Clone the repository:**
+```sh
+   git clone https://github.com/Hafiz-Al-Shams/movie-finder-hafiz.git
+   cd movie-finder-hafiz
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Install dependencies:**
+```sh
+   npm install
+```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+3. **Set up environment variables:**
+   Create a `.env.local` file in the root directory and add your TMDB API Read Access Token:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```sh
+   TMDB_READ_ACCESS_TOKEN=YOUR_TMDB_READ_ACCESS_TOKEN
+```
 
-## Learn More
+   You can get a free token by signing up at [themoviedb.org](https://www.themoviedb.org/) and generating an API Read Access Token under Settings → API.
 
-To learn more about Next.js, take a look at the following resources:
+4. **Start the development server:**
+```sh
+   npm run dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the app in action.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Notes on Pagination Logic
+TMDB's API returns 20 results per page by default. Since this project requires exactly 12 results per page, `lib/tmdb.js` includes a custom pagination layer that fetches and merges TMDB pages as needed, then slices out exactly 12 results per "app page" — ensuring consistent, predictable pagination regardless of TMDB's native page size.
 
-## Deploy on Vercel
+## Additional Resources
+- [TMDB API Documentation](https://developer.themoviedb.org/docs)
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+🚀 **Developed by Hafiz Al Shams**
